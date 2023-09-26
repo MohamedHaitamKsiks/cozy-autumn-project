@@ -18,9 +18,9 @@ public:
 
 
 private:
+
 	// move on one axis only
 	void MoveAndCollide(PhysicsBody2D& physicsBody2D, CollisionBox2D& collisionBox2D, Transform2D& transform2D, const vec2& axis, float delta);
-
 
 	// default methods
 	void OnCreate();

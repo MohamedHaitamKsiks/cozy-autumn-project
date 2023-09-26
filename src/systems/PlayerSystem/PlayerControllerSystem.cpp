@@ -7,9 +7,9 @@ void PlayerControllerSystem::OnCreate()
 
 void PlayerControllerSystem::OnUpdate(float delta)
 {
-	ForEach([delta](PlayerController& playerController, PhysicsBody2D& physicsBody2D)
+	ForEach([delta](PlayerController& playerController, PhysicsBody2D& physicsBody2D, Transform2D& transform2D)
 	{
-		
+		// ground
 		if (physicsBody2D.OnGround)
 		{
 			physicsBody2D.Velocity.y = 0.0f;
@@ -19,6 +19,14 @@ void PlayerControllerSystem::OnUpdate(float delta)
 		{
 			playerController.OnGround = false;
 		}
+
+		// celling collision
+		if (physicsBody2D.OnCeilling)
+			physicsBody2D.Velocity.y = 0.0f;
+
+		// wall collision
+		if (physicsBody2D.OnWall)
+			physicsBody2D.Velocity.x = 0.0f; 
 
 		// move
 		float direction = (float)playerController.InputRightPressed - (float)playerController.InputLeftPressed;
@@ -41,12 +49,20 @@ void PlayerControllerSystem::OnUpdate(float delta)
 
 void PlayerControllerSystem::OnRender2D()
 {
-	// insert code ...
+	ForEach([](PlayerController& playerController, PhysicsBody2D& physicsBody2D, Transform2D& transform2D)
+	{
+		SpriteDrawInfo spriteInfo;
+		spriteInfo.Centered = true;
+		spriteInfo.Layer = DrawLayer::Player;
+		spriteInfo.SpriteID = playerController.SpriteID;
+
+		RenderingSystem2D::DrawSprite(spriteInfo, transform2D);
+	});
 };
 
 void PlayerControllerSystem::OnInputEvent(const InputEvent& event)
 {
-	ForEach([&event](PlayerController& playerController, PhysicsBody2D& physicsBody2D)
+	ForEach([&event](PlayerController& playerController, PhysicsBody2D& physicsBody2D, Transform2D& transform2D)
 	{
 		if (event.GetType() != InputEventType::KEYBOARD) return;
 

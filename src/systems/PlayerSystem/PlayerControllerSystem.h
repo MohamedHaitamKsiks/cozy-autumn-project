@@ -3,12 +3,15 @@
 
 #include "components/Player/PlayerController.h"
 #include "components/Physics2D/PhysicsBody2D.h"
+#include "components/Transform2D/Transform2D.h"
+
+#include "systems/RenderingSystem2D/RenderingSystem2D.h"
 
 #include "ASEngine.h"
 
 using namespace ASEngine;
 
-class PlayerControllerSystem: public System<PlayerController, PhysicsBody2D>
+class PlayerControllerSystem: public System<PlayerController, PhysicsBody2D, Transform2D>
 {
 
 	void OnCreate();

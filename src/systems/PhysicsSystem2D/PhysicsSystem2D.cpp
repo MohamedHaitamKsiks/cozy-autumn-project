@@ -35,6 +35,8 @@ void PhysicsSystem2D::MoveAndCollide(PhysicsBody2D &physicsBody2D, CollisionBox2
 		{
 			physicsBody2D.OnWall = direction.x != 0.0f;
 		}
+
+		
 		
 	});
 }
@@ -46,6 +48,8 @@ void PhysicsSystem2D::OnCreate()
 
 void PhysicsSystem2D::OnUpdate(float delta)
 {
+	if (delta < 0.0000001f) return;
+
 	ForEach([this, delta](PhysicsBody2D& physicsBody2D, CollisionBox2D& collisionBox2D, Transform2D& transform2D)
 	{
 		if (physicsBody2D.IsStatic) return;
