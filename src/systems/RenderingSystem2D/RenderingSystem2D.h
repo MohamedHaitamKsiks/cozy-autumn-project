@@ -8,10 +8,29 @@
 
 using namespace ASEngine;
 
+// layers
+enum class DrawLayer
+{
+	Background,
+	Player,
+	Debug,
+	UI,
+	// draw layers number
+	Count
+};
+
+// draw command (Quad & material) will be queued to be drawn 
+struct DrawCommand
+{
+	Quad2D Quad;
+	ResourceID MaterialID;
+};
+
 // base draw info
 struct DrawInfo
 {
 	Color Modulate = Color::WHITE();
+	DrawLayer Layer = DrawLayer::Background;
 };
 
 // rectangle draw info
@@ -49,15 +68,33 @@ public:
 	// draw text
 	static void DrawText(const TextDrawInfo& textInfo, const Transform2D& transform2D);
 
+	// queue draw command
+	static inline void QueueDrawCommand(const DrawCommand& drawCommnad, DrawLayer layer)
+	{
+		s_Instance->IQueueDrawCommand(drawCommnad, layer);
+	}
+
 private:
+	// system instance
+	static RenderingSystem2D* s_Instance;
+
 	// default rectangle material
 	static ResourceID s_RectangleDefaultMaterial;
+
+	// draw queue
+	TDynamicArray<DrawCommand> m_DrawQueue[(int) DrawLayer::Count];
 
 	// on system first frame
 	void OnCreate();
 
 	// init rectangle material
 	void InitRectangleDefaultMaterial();
+
+	// queue draw
+	void IQueueDrawCommand(const DrawCommand& drawCommand, DrawLayer layer);
+
+	// draw
+	void OnRender2D();
 };
 
 #endif // SYSTEM_RENDERINGSYSTEM2D_H

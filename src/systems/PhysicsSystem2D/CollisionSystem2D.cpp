@@ -64,7 +64,8 @@ void CollisionSystem2D::OnRender2D()
 		RectangleDrawInfo rectangleInfo;
 		rectangleInfo.Size = collisionBox2D.Size;
 		rectangleInfo.Modulate = Color{0.0f, 1.0f, 0.0f, 0.3f};
- 
+		rectangleInfo.Layer = DrawLayer::Debug;
+
 		Transform2D rectangleTransform2D = transform2D;
 		CalculateRectanglePosition(collisionBox2D, transform2D, rectangleTransform2D.Position);
 
