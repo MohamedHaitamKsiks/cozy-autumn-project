@@ -14,7 +14,7 @@ void Serializer<LayerBitMask>::Deserialize(const Json& object, LayerBitMask& des
     LayerBitMask layers = 0;
     for (int i = 0; i < object.size(); i++)
     {
-        LayerBitMask layer = (uint32_t) object[i];
+        LayerBitMask layer = 1 << (uint32_t) object[i];
         layers = layers | layer;
     }
 

@@ -22,7 +22,7 @@
                 "y": 0
             },
             "IsCentered": true,
-            "CollisionLayers": [0, 1],
+            "CollisionLayers": [0, 2],
             "DrawDebug": true
         },
         "Transform2D":
@@ -40,42 +40,7 @@
             "Rotation": 0.0
         }
     },
-    {
-        "PhysicsBody2D": {
-            "IsStatic": false,
-            "Velocity": {
-                "x": -16.0,
-                "y": 160.0
-            }
-        },
-        "CollisionBox2D": {
-            "Size": {
-                "x": 32,
-                "y": 32
-            },
-            "Offset": {
-                "x": 0,
-                "y": 0
-            },
-            "IsCentered": true,
-            "CollisionLayers": [
-                0,
-                1
-            ],
-            "DrawDebug": true
-        },
-        "Transform2D": {
-            "Position": {
-                "x": 64,
-                "y": 0
-            },
-            "Scale": {
-                "x": 2,
-                "y": 1
-            },
-            "Rotation": 0.0
-        }
-    },
+   
     {
         "PhysicsBody2D": 
         {

@@ -10,8 +10,15 @@ void CollisionSystem2D::CalculateRectanglePosition(const CollisionBox2D &collisi
 	dest = src.Position + (offset * src.Scale);
 }
 
-void CollisionSystem2D::CollisionBetween(const CollisionBox2D &a_CollisionBox2D, const Transform2D &a_Transform2D, const CollisionBox2D &b_CollisionBox2D, const Transform2D &b_Transform2D, CollisionInfo& pCollisionInfo)
+void CollisionSystem2D::CollisionBetween(const CollisionBox2D &a_CollisionBox2D, const Transform2D &a_Transform2D, const CollisionBox2D &b_CollisionBox2D, const Transform2D &b_Transform2D, CollisionInfo& collisionInfo)
 {
+	// check mask intersection
+	if ((a_CollisionBox2D.CollisionLayers & b_CollisionBox2D.CollisionLayers) == 0)
+	{
+		collisionInfo.Collision = false;
+		return;
+	}
+	
 	// get rectangle positions
 	vec2 a_Position, b_Position;
 	CalculateRectanglePosition(a_CollisionBox2D, a_Transform2D, a_Position);
@@ -32,10 +39,10 @@ void CollisionSystem2D::CollisionBetween(const CollisionBox2D &a_CollisionBox2D,
 		abs(a_Position.y - b_Position.y)
 	};
 	vec2 sumRectanglesSizes = (a_Size + b_Size) * 0.5f;
-	pCollisionInfo.Intersection = sumRectanglesSizes - distanceBetweenRectangles;
+	collisionInfo.Intersection = sumRectanglesSizes - distanceBetweenRectangles;
 
 	// check collision
-	pCollisionInfo.Collision = pCollisionInfo.Intersection.x > 0.0f && pCollisionInfo.Intersection.y > 0.0f;
+	collisionInfo.Collision = collisionInfo.Intersection.x > 0.0f && collisionInfo.Intersection.y > 0.0f;
 }
 
 void CollisionSystem2D::OnCreate()
