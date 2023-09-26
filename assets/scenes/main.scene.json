@@ -1,0 +1,120 @@
+[
+    {
+        "PhysicsBody2D":
+        {
+            "IsStatic": false,
+            "Velocity": 
+            {
+                "x": 0.0,
+                "y": 64.0
+            }
+        },
+        "CollisionBox2D":
+        {
+            "Size": 
+            {
+                "x": 32,
+                "y": 32
+            },
+            "Offset":
+            {
+                "x": 0,
+                "y": 0
+            },
+            "IsCentered": true,
+            "CollisionLayers": [0, 1],
+            "DrawDebug": true
+        },
+        "Transform2D":
+        {
+            "Position":
+            {
+                "x": 0,
+                "y": 0
+            },
+            "Scale":
+            {
+                "x": 1,
+                "y": 1
+            },
+            "Rotation": 0.0
+        }
+    },
+    {
+        "PhysicsBody2D": {
+            "IsStatic": false,
+            "Velocity": {
+                "x": -16.0,
+                "y": 160.0
+            }
+        },
+        "CollisionBox2D": {
+            "Size": {
+                "x": 32,
+                "y": 32
+            },
+            "Offset": {
+                "x": 0,
+                "y": 0
+            },
+            "IsCentered": true,
+            "CollisionLayers": [
+                0,
+                1
+            ],
+            "DrawDebug": true
+        },
+        "Transform2D": {
+            "Position": {
+                "x": 64,
+                "y": 0
+            },
+            "Scale": {
+                "x": 2,
+                "y": 1
+            },
+            "Rotation": 0.0
+        }
+    },
+    {
+        "PhysicsBody2D": 
+        {
+            "Velocity":
+            {
+                "x": 0,
+                "y": 0
+            },
+            "IsStatic": true
+        },
+        "CollisionBox2D": 
+        {
+            "Size": 
+            {
+                "x": 800,
+                "y": 160
+            },
+            "Offset": 
+            {
+                "x": -400,
+                "y": 0
+            },
+            "IsCentered": false,
+            "CollisionLayers": [0, 1],
+            "DrawDebug": true
+        },
+        "Transform2D": 
+        {
+            "Position": 
+            {
+                "x": 0,
+                "y": 64
+            },
+            "Scale": 
+            {
+                "x": 1,
+                "y": 1
+            },
+            "Rotation": 0.0
+        }
+    }
+]
