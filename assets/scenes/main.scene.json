@@ -1,54 +1,22 @@
 [
     {
-        "PlayerController":
+        "Spawner2D":
         {
-            "State": "Idle"
-        },
-        "Gravity2D":
-        {
-            "Gravity": 300
-        },
-        "PhysicsBody2D":
-        {
-            "IsStatic": false,
-            "Velocity": 
+            "SceneName": "scenes/player.scene.json",
+            "SpawnTransform2D": 
             {
-                "x": 0.0,
-                "y": 0.0
+                "Position": {
+                    "x": 0,
+                    "y": -64
+                },
+                "Scale": {
+                    "x": -1,
+                    "y": 1
+                },
+                "Rotation": 0.0
             }
-        },
-        "CollisionBox2D":
-        {
-            "Size": 
-            {
-                "x": 28,
-                "y": 32
-            },
-            "Offset":
-            {
-                "x": 0,
-                "y": 8
-            },
-            "IsCentered": true,
-            "CollisionLayers": [0, 2],
-            "DrawDebug": false
-        },
-        "Transform2D":
-        {
-            "Position":
-            {
-                "x": 0,
-                "y": -64
-            },
-            "Scale":
-            {
-                "x": 1,
-                "y": 1
-            },
-            "Rotation": 0.0
         }
     },
-   
     {
         "PhysicsBody2D": 
         {

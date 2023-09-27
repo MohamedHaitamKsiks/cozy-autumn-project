@@ -5,6 +5,8 @@
 using namespace ASEngine;
 
 #include "components/EmptyComponent.h"
+#include "components/Spawner2D/Spawner2D.h"
+#include "components/AnimatedSprite2D/AnimatedSprite2D.h"
 #include "components/AudioPlayer2D/AudioPlayer2D.h"
 #include "components/TileMap2D/TileMap2D.h"
 #include "components/Physics2D/Gravity2D.h"
@@ -16,6 +18,7 @@ using namespace ASEngine;
 #include "systems/PhysicsSystem2D/PhysicsSystem2D.h"
 #include "systems/PhysicsSystem2D/CollisionSystem2D.h"
 #include "systems/RenderingSystem2D/RenderingSystem2D.h"
+#include "systems/SpriteAnimationSystem2D/SpriteAnimationSystem2D.h"
 #include "systems/PlayerSystem/PlayerControllerSystem.h"
 
 // register ecs

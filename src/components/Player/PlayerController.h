@@ -5,6 +5,8 @@
 
 using namespace ASEngine;
 
+
+
 struct PlayerController: public TComponent<PlayerController>
 {
 	// player state
@@ -14,6 +16,7 @@ struct PlayerController: public TComponent<PlayerController>
 
 	// sprite animator
 	ResourceID SpriteID;
+	
 
 	// input
 	bool InputLeftPressed = false;

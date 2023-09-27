@@ -49,15 +49,7 @@ void PlayerControllerSystem::OnUpdate(float delta)
 
 void PlayerControllerSystem::OnRender2D()
 {
-	ForEach([](PlayerController& playerController, PhysicsBody2D& physicsBody2D, Transform2D& transform2D)
-	{
-		SpriteDrawInfo spriteInfo;
-		spriteInfo.Centered = true;
-		spriteInfo.Layer = DrawLayer::Player;
-		spriteInfo.SpriteID = playerController.SpriteID;
-
-		RenderingSystem2D::DrawSprite(spriteInfo, transform2D);
-	});
+	// insert code ...
 };
 
 void PlayerControllerSystem::OnInputEvent(const InputEvent& event)

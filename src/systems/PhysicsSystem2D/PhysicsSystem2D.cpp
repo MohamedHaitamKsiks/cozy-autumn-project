@@ -5,6 +5,9 @@ void PhysicsSystem2D::MoveAndCollide(PhysicsBody2D &physicsBody2D, CollisionBox2
 	// get velocity
 	vec2 velocity = physicsBody2D.Velocity * axis;
 
+	// skip if velocity is zero
+	if (velocity.x == 0.0f && velocity.y == 0.0f) return;
+
 	// move physics object 
 	transform2D.Position = transform2D.Position + velocity * delta;
 

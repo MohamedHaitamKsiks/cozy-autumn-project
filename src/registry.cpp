@@ -3,6 +3,8 @@
 void ECSRegistry()
 {
 	ComponentManager::RegisterComponent<EmptyComponent>(UniqueString("EmptyComponent"));
+	ComponentManager::RegisterComponent<Spawner2D>(UniqueString("Spawner2D"));
+	ComponentManager::RegisterComponent<AnimatedSprite2D>(UniqueString("AnimatedSprite2D"));
 	ComponentManager::RegisterComponent<AudioPlayer2D>(UniqueString("AudioPlayer2D"));
 	ComponentManager::RegisterComponent<TileMap2D>(UniqueString("TileMap2D"));
 	ComponentManager::RegisterComponent<Gravity2D>(UniqueString("Gravity2D"));
@@ -14,5 +16,6 @@ void ECSRegistry()
 	SystemManager::RegisterSystem<PhysicsSystem2D>();
 	SystemManager::RegisterSystem<CollisionSystem2D>();
 	SystemManager::RegisterSystem<RenderingSystem2D>();
+	SystemManager::RegisterSystem<SpriteAnimationSystem2D>();
 	SystemManager::RegisterSystem<PlayerControllerSystem>();
 }
