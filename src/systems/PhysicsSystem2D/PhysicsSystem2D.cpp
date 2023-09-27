@@ -39,8 +39,6 @@ void PhysicsSystem2D::MoveAndCollide(PhysicsBody2D &physicsBody2D, CollisionBox2
 			physicsBody2D.OnWall = direction.x != 0.0f;
 		}
 
-		
-		
 	});
 }
 

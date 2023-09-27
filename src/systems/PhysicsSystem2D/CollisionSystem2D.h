@@ -8,6 +8,8 @@
 
 #include "ASEngine.h"
 
+#define COLLISION_PRECISION 0.00001f
+
 using namespace ASEngine;
 
 struct CollisionInfo

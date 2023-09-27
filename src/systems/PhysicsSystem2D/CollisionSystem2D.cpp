@@ -7,6 +7,7 @@ void CollisionSystem2D::CalculateRectanglePosition(const CollisionBox2D &collisi
 	if (collisionBox2D.IsCentered)
 		offset = offset + collisionBox2D.Size * -0.5f;
 
+
 	dest = src.Position + (offset * src.Scale.Abs());
 }
 
@@ -42,7 +43,7 @@ void CollisionSystem2D::CollisionBetween(const CollisionBox2D &a_CollisionBox2D,
 	collisionInfo.Intersection = sumRectanglesSizes - distanceBetweenRectangles;
 
 	// check collision
-	collisionInfo.Collision = collisionInfo.Intersection.x > 0.0f && collisionInfo.Intersection.y > 0.0f;
+	collisionInfo.Collision = collisionInfo.Intersection.x > COLLISION_PRECISION && collisionInfo.Intersection.y > COLLISION_PRECISION;
 }
 
 void CollisionSystem2D::OnCreate()
