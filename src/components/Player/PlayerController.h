@@ -6,25 +6,24 @@
 using namespace ASEngine;
 
 
-
 struct PlayerController: public TComponent<PlayerController>
 {
 	// player state
 	UniqueString State;
+	float JumpBuffer = 0.0f;
+
+
 	bool CanJump = true;
 	bool OnGround = false;
 
-	// sprite animator
-	ResourceID SpriteID;
-	
+	// look direction
+	float LookDirection = 1;
 
 	// input
 	bool InputLeftPressed = false;
 	bool InputRightPressed = false;
 	bool InputJumpPressed = false;
 
-	// on create
-	void OnCreate();
 };
 
 #endif // COMPONENT_PLAYERCONTROLLER_H
