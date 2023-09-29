@@ -8,7 +8,7 @@ void CollisionSystem2D::CalculateRectanglePosition(const CollisionBox2D &collisi
 		offset = offset + collisionBox2D.Size * -0.5f;
 
 
-	dest = src.Position + (offset * src.Scale.Abs());
+	dest = src.Position + offset;
 }
 
 void CollisionSystem2D::CollisionBetween(const CollisionBox2D &a_CollisionBox2D, const Transform2D &a_Transform2D, const CollisionBox2D &b_CollisionBox2D, const Transform2D &b_Transform2D, CollisionInfo& collisionInfo)
@@ -26,8 +26,8 @@ void CollisionSystem2D::CollisionBetween(const CollisionBox2D &a_CollisionBox2D,
 	CalculateRectanglePosition(b_CollisionBox2D, b_Transform2D, b_Position);
 
 	// get rectangle sizes
-	vec2 a_Size = a_CollisionBox2D.Size * a_Transform2D.Scale.Abs();
-	vec2 b_Size = b_CollisionBox2D.Size * b_Transform2D.Scale.Abs();
+	vec2 a_Size = a_CollisionBox2D.Size;
+	vec2 b_Size = b_CollisionBox2D.Size;
 
 	// offset position to center
 	a_Position = a_Position + a_Size * 0.5f;
@@ -68,6 +68,7 @@ void CollisionSystem2D::OnRender2D()
 		rectangleInfo.Layer = DrawLayer::Debug;
 
 		Transform2D rectangleTransform2D = transform2D;
+		rectangleTransform2D.Scale = vec2::ONE();
 		CalculateRectanglePosition(collisionBox2D, transform2D, rectangleTransform2D.Position);
 
 		RenderingSystem2D::DrawRectangle(rectangleInfo, rectangleTransform2D); 

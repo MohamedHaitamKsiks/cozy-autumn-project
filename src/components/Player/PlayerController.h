@@ -10,9 +10,8 @@ struct PlayerController: public TComponent<PlayerController>
 {
 	// player state
 	UniqueString State;
+
 	float JumpBuffer = 0.0f;
-
-
 	bool CanJump = true;
 	bool OnGround = false;
 

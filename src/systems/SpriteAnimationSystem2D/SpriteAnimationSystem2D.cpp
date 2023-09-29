@@ -32,6 +32,8 @@ void SpriteAnimationSystem2D::OnRender2D()
 		spriteInfo.SpriteID = animatedSprite2D.SpriteID;
 		spriteInfo.Layer = animatedSprite2D.Layer;
 		spriteInfo.Offset = animatedSprite2D.Offset;
+		spriteInfo.FlipH = animatedSprite2D.FlipH;
+		spriteInfo.FlipV = animatedSprite2D.FlipV;
 
 		RenderingSystem2D::DrawSprite(spriteInfo, transform2D);
 	});

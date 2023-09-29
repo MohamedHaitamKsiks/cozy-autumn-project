@@ -19,6 +19,9 @@ struct AnimatedSprite2D: public TComponent<AnimatedSprite2D>
 
 	vec2 Offset = vec2::ZERO();
 	bool Centered = false;
+	
+	bool FlipH = false;
+	bool FlipV = false;
 
 	Color Modulate = Color::WHITE();
 

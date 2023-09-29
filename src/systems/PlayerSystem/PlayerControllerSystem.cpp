@@ -1,13 +1,13 @@
 #include "PlayerControllerSystem.h"
 
 // define constants
-#define PLAYER_ACC 700.0f
+#define PLAYER_ACC 800.0f
 #define PLAYER_MAX_SPEED 150.0f
 #define PLAYER_UP_GRAVITY 450.0f
-#define PLAYER_DOWN_GRAVITY 700.0f
+#define PLAYER_DOWN_GRAVITY 800.0f
 #define PLAYER_JUMP_FORCE 240.0f
 // 300 ms jump buffer
-#define PLAYER_JUMP_BUFFER 0.3f 
+#define PLAYER_JUMP_BUFFER 0.2f 
 
 void PlayerControllerSystem::OnCreate(){
     // insert code ...
@@ -17,9 +17,16 @@ void PlayerControllerSystem::OnUpdate(float delta)
 {
 	ForEach([delta](PlayerController& playerController, PhysicsBody2D& physicsBody2D, Gravity2D& gravity2D, Transform2D& transform2D)
 	{
+		// move camera 
+		auto& camera = Renderer2D::GetCamera2D();
+		camera.Position = transform2D.Position - Viewport::GetSize() * 0.5f;
+
 		// ground
 		if (physicsBody2D.OnGround)
 		{
+			if (!playerController.OnGround)
+				PlayerAnimationSystem::LandSquash(physicsBody2D, transform2D);
+			
 			physicsBody2D.Velocity.y = 0.0f;
 			playerController.OnGround = true;
 		}
@@ -51,7 +58,7 @@ void PlayerControllerSystem::OnUpdate(float delta)
 			if (abs(physicsBody2D.Velocity.x) > PLAYER_MAX_SPEED)
 				physicsBody2D.Velocity.x = Sign(physicsBody2D.Velocity.x) * PLAYER_MAX_SPEED;
 		}
-		else if (abs(physicsBody2D.Velocity.x) > 0.001f)
+		else if (abs(physicsBody2D.Velocity.x) > 0.1f)
 		{
 			physicsBody2D.Velocity.x -= Sign(physicsBody2D.Velocity.x) * PLAYER_ACC * delta;
 		}
@@ -64,19 +71,19 @@ void PlayerControllerSystem::OnUpdate(float delta)
 		if (abs(direction) > 0.5f && direction != playerController.LookDirection)
 		{
 			playerController.LookDirection = direction;
-			transform2D.Scale.x = direction;
 		} 
 
 		// jump 
 		playerController.JumpBuffer -= delta;
-
 		if (playerController.JumpBuffer > 0.0001f &&  playerController.OnGround)
 		{
 			physicsBody2D.Velocity.y = - PLAYER_JUMP_FORCE;
 			playerController.OnGround = false;
 			playerController.JumpBuffer = 0.0f;
 			gravity2D.Gravity = PLAYER_UP_GRAVITY;
-		}
+
+			PlayerAnimationSystem::JumpStretch(transform2D);
+		} 
 		if (!playerController.InputJumpPressed)
 		{
 			playerController.CanJump = true;

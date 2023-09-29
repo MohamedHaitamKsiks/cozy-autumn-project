@@ -8,7 +8,8 @@ using namespace ASEngine;
 #include "components/Spawner2D/Spawner2D.h"
 #include "components/AnimatedSprite2D/AnimatedSprite2D.h"
 #include "components/AudioPlayer2D/AudioPlayer2D.h"
-#include "components/TileMap2D/TileMap2D.h"
+#include "components/World2D/World2D.h"
+#include "components/World2D/TileMap2D.h"
 #include "components/Physics2D/Gravity2D.h"
 #include "components/Physics2D/PhysicsBody2D.h"
 #include "components/Physics2D/CollisionBox2D.h"
@@ -17,9 +18,12 @@ using namespace ASEngine;
 #include "systems/PhysicsSystem2D/GravitySystem2D.h"
 #include "systems/PhysicsSystem2D/PhysicsSystem2D.h"
 #include "systems/PhysicsSystem2D/CollisionSystem2D.h"
+#include "systems/SpawningSystem2D/SpawningSystem2D.h"
 #include "systems/RenderingSystem2D/RenderingSystem2D.h"
 #include "systems/SpriteAnimationSystem2D/SpriteAnimationSystem2D.h"
+#include "systems/PlayerSystem/PlayerAnimationSystem.h"
 #include "systems/PlayerSystem/PlayerControllerSystem.h"
+#include "systems/TilemapRenderingSystem2D/TilemapRenderingSystem2D.h"
 
 // register ecs
 void ECSRegistry();

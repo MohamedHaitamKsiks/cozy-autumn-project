@@ -8,6 +8,7 @@
 
 #include "systems/RenderingSystem2D/RenderingSystem2D.h"
 #include "systems/SpriteAnimationSystem2D/SpriteAnimationSystem2D.h"
+#include "PlayerAnimationSystem.h"
 
 #include "ASEngine.h"
 

@@ -12,6 +12,7 @@ using namespace ASEngine;
 enum class DrawLayer
 {
 	Background,
+	Tilemap,
 	Player,
 	Debug,
 	UI,
@@ -46,6 +47,8 @@ struct SpriteDrawInfo : public DrawInfo
 	float Frame = 0;
 	vec2 Offset = vec2::ZERO();
 	bool Centered = true;
+	bool FlipH = false;
+	bool FlipV = false;
 };
 
 // text draw info
@@ -59,6 +62,8 @@ struct TextDrawInfo : public DrawInfo
 class RenderingSystem2D: public System<EmptyComponent>
 {
 public:
+	RenderingSystem2D();
+
 	// draw rectangle
 	static void DrawRectangle(const RectangleDrawInfo& rectangleInfo, const Transform2D &transform2D);
 

@@ -3,6 +3,11 @@
 ResourceID RenderingSystem2D::s_RectangleDefaultMaterial = CHUNK_NULL;
 RenderingSystem2D* RenderingSystem2D::s_Instance = nullptr;
 
+RenderingSystem2D::RenderingSystem2D()
+{
+	m_Priority = 10000;
+}
+
 void RenderingSystem2D::OnCreate()
 {
 	s_Instance = this;
@@ -16,7 +21,7 @@ void RenderingSystem2D::InitRectangleDefaultMaterial()
 	whitePixels[0] = UINT32_MAX;
 
 	// create image 1x1 white
-	Image image{(uint8_t *)whitePixels, 1, 1, ImageFormat::RGBA};
+	Image image{(uint8_t *) whitePixels, 1, 1, ImageFormat::RGBA};
 
 	// create texture 1x1 white
 	Texture texture = Texture::LoadFromImage(image);
@@ -34,7 +39,6 @@ void RenderingSystem2D::InitRectangleDefaultMaterial()
 	// save material ID
 	s_RectangleDefaultMaterial = defaultMaterialID;
 }
-
 
 void RenderingSystem2D::DrawRectangle(const RectangleDrawInfo &rectangleInfo, const Transform2D &transform2D)
 {
@@ -59,7 +63,7 @@ void RenderingSystem2D::DrawSprite(const SpriteDrawInfo &spriteInfo, const Trans
 	};
 
 	// get transform matrix
-	mat3 transformMatrix = mat3::Transform(transform2D.Position + spriteInfo.Offset, transform2D.Scale, transform2D.Rotation);
+	mat3 transformMatrix = mat3::Transform(transform2D.Position, transform2D.Scale * vec2{(spriteInfo.FlipH) ? -1.0f : 1.0f, (spriteInfo.FlipV) ? -1.0f : 1.0f}, transform2D.Rotation) * mat3::Translate(spriteInfo.Offset);
 	// center
 	if (spriteInfo.Centered)
 		transformMatrix = transformMatrix * mat3::Translate(spriteSize * -0.5f);
@@ -131,7 +135,6 @@ void RenderingSystem2D::DrawText(const TextDrawInfo &textInfo, const Transform2D
 			cursorPosition.x += (float)fontCharacter.Width + font.GetSeparation();
 		}
 	}
-
 }
 
 void RenderingSystem2D::IQueueDrawCommand(const DrawCommand &drawCommand, DrawLayer layer)
@@ -145,7 +148,7 @@ void RenderingSystem2D::OnRender2D()
 	{
 		for (const auto &command : m_DrawQueue[(int)layer])
 		{
-			Renderer2D::DrawQuad(command.Quad , command.MaterialID);
+			Renderer2D::DrawQuad(command.Quad, command.MaterialID);
 		}
 		// clean queue
 		m_DrawQueue[(int)layer].Clear();

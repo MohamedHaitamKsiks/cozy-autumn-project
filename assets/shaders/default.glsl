@@ -20,7 +20,7 @@ void main()
     UV = v_TextureCoord;
     MODULATE = v_Modulate;
 
-    gl_Position = vec4( u_View * u_Camera * vec3(v_Position, 0.0), 1.0);
+    gl_Position = vec4( u_View * u_Camera * vec3(v_Position, 1.0f), 1.0);
 }
 
 #endif  

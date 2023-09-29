@@ -3,24 +3,27 @@
 
 #include "ASEngine.h"
 
-using namespace ASEngine;
 
+using namespace ASEngine;
 
 struct Tile2D
 {
-	uint32_t TileID = 0;
+	vec2 Source;
+	vec2 Position;
 };
 
-struct TileMapLayer2D
+struct TileMapLayer2D 
 {
 	TDynamicArray<Tile2D> Tiles{};
 };
 
-
 struct TileMap2D: public TComponent<TileMap2D>
 {
-	UniqueString TileMapName;
 	TDynamicArray<TileMapLayer2D> Layers{};
+	float TileSize = 0.0f;
+	int LevelID = -1;
+
+	void OnCreate();
 };
 
 #endif // COMPONENT_TILEMAP2D_H
