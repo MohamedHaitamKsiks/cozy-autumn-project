@@ -15,7 +15,7 @@ using namespace ASEngine;
 class PhysicsSystem2D: public System<PhysicsBody2D, CollisionBox2D, Transform2D>
 {
 public:
-
+	PhysicsSystem2D();
 
 private:
 

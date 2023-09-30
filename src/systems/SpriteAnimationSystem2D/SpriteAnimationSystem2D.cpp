@@ -28,13 +28,20 @@ void SpriteAnimationSystem2D::OnRender2D()
 		SpriteDrawInfo spriteInfo;
 		spriteInfo.Centered = animatedSprite2D.Centered;
 		spriteInfo.Frame = animatedSprite2D.Frame;
-		spriteInfo.Modulate = animatedSprite2D.Modulate;
+		spriteInfo.Modulate = Color::BLACK();
 		spriteInfo.SpriteID = animatedSprite2D.SpriteID;
 		spriteInfo.Layer = animatedSprite2D.Layer;
 		spriteInfo.Offset = animatedSprite2D.Offset;
 		spriteInfo.FlipH = animatedSprite2D.FlipH;
 		spriteInfo.FlipV = animatedSprite2D.FlipV;
 
+		// draw shadow
+		Transform2D shadowTransform2D = transform2D;
+		shadowTransform2D.Position = shadowTransform2D.Position + vec2{-1.0f, 1.0f} * 2.0f;
+		RenderingSystem2D::DrawSprite(spriteInfo, shadowTransform2D);
+
+		// draw sprite
+		spriteInfo.Modulate = animatedSprite2D.Modulate;
 		RenderingSystem2D::DrawSprite(spriteInfo, transform2D);
 	});
 };

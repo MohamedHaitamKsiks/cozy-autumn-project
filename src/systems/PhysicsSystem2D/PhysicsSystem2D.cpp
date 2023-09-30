@@ -1,5 +1,10 @@
 #include "PhysicsSystem2D.h"
 
+PhysicsSystem2D::PhysicsSystem2D()
+{
+	m_Priority = 98;
+}
+
 void PhysicsSystem2D::MoveAndCollide(PhysicsBody2D &physicsBody2D, CollisionBox2D &collisionBox2D, Transform2D &transform2D, const vec2 &axis, float delta)
 {
 	// get velocity

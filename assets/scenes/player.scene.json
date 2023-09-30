@@ -1,7 +1,14 @@
 [
     {
+        "CameraController2D":
+        {
+            "ShakeFreq": 20.0,
+            "LookDistance": 50.0,
+            "LookSpeed": 2.0,
+            "TransitionSpeed": 5.0
+        },
         "AnimatedSprite2D": {
-            "SpriteName": "sprites/idle.sprite.json",
+            "SpriteName": "sprites/player/idle.sprite.json",
             "FrameRate": 12.0,
             "Offset": {
                 "x": -24,
@@ -10,7 +17,7 @@
             "Centered": false
         },
         "PlayerController": {
-            "State": "Idle"
+            "State": "Free"
         },
         "Gravity2D": {
             "Gravity": 200
@@ -24,12 +31,12 @@
         },
         "CollisionBox2D": {
             "Size": {
-                "x": 28,
-                "y": 32
+                "x": 16,
+                "y": 24
             },
             "Offset": {
-                "x": -14,
-                "y": -32
+                "x": -8,
+                "y": -24
             },
             "IsCentered": false,
             "CollisionLayers": [

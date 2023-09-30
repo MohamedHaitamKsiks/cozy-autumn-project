@@ -1,13 +1,6 @@
 #include "PlayerControllerSystem.h"
 
-// define constants
-#define PLAYER_ACC 800.0f
-#define PLAYER_MAX_SPEED 150.0f
-#define PLAYER_UP_GRAVITY 450.0f
-#define PLAYER_DOWN_GRAVITY 800.0f
-#define PLAYER_JUMP_FORCE 240.0f
-// 300 ms jump buffer
-#define PLAYER_JUMP_BUFFER 0.2f 
+
 
 void PlayerControllerSystem::OnCreate(){
     // insert code ...
@@ -17,16 +10,18 @@ void PlayerControllerSystem::OnUpdate(float delta)
 {
 	ForEach([delta](PlayerController& playerController, PhysicsBody2D& physicsBody2D, Gravity2D& gravity2D, Transform2D& transform2D)
 	{
-		// move camera 
-		auto& camera = Renderer2D::GetCamera2D();
-		camera.Position = transform2D.Position - Viewport::GetSize() * 0.5f;
 
 		// ground
 		if (physicsBody2D.OnGround)
 		{
 			if (!playerController.OnGround)
+			{
 				PlayerAnimationSystem::LandSquash(physicsBody2D, transform2D);
-			
+				playerController.TimeSinceLand = 0.0f;
+			}
+
+			playerController.TimeSinceLand += delta;
+
 			physicsBody2D.Velocity.y = 0.0f;
 			playerController.OnGround = true;
 		}
@@ -39,45 +34,84 @@ void PlayerControllerSystem::OnUpdate(float delta)
 		if (physicsBody2D.OnCeilling)
 			physicsBody2D.Velocity.y = 0.0f;
 
-		// wall collision
-		if (physicsBody2D.OnWall)
-			physicsBody2D.Velocity.x = 0.0f;
-
 		// control gravity
 		if (physicsBody2D.Velocity.y > 0.0f)
 			gravity2D.Gravity = PLAYER_DOWN_GRAVITY;
 
-		// move
-		float direction = (float)playerController.InputRightPressed - (float)playerController.InputLeftPressed;
-		
-		// accelerate
-		if (abs(direction) > 0.5f)
+		if (playerController.State == PlayerController::FreeState)
 		{
-			physicsBody2D.Velocity.x += direction * PLAYER_ACC * delta;
+			// move
+			float direction = (float)playerController.InputRightPressed - (float)playerController.InputLeftPressed;
+			float acc = (playerController.OnGround) ? PLAYER_ACC : PLAYER_FALL_ACC;
+			float dec = (playerController.OnGround) ? PLAYER_ACC : PLAYER_FALL_DEC;
 
-			if (abs(physicsBody2D.Velocity.x) > PLAYER_MAX_SPEED)
-				physicsBody2D.Velocity.x = Sign(physicsBody2D.Velocity.x) * PLAYER_MAX_SPEED;
+			// accelerate
+			if (abs(direction) > 0.5f)
+			{
+				physicsBody2D.Velocity.x += direction * acc * delta;
+
+				if (abs(physicsBody2D.Velocity.x) > PLAYER_MAX_SPEED)
+					physicsBody2D.Velocity.x = Sign(physicsBody2D.Velocity.x) * PLAYER_MAX_SPEED;
+			}
+			else if (abs(physicsBody2D.Velocity.x) > 10.0f)
+			{
+				physicsBody2D.Velocity.x -= Sign(physicsBody2D.Velocity.x) * dec * delta;
+			}
+			else 
+			{
+				physicsBody2D.Velocity.x = 0.0f;
+			}
+				
+			// look direction
+			if (playerController.OnGround && abs(direction) > 0.5f && direction != playerController.LookDirection)
+			{
+				playerController.LookDirection = direction;
+			}
+			else if (!playerController.OnGround && abs(physicsBody2D.Velocity.x) > 0.5f && physicsBody2D.Velocity.x * playerController.LookDirection < 0.0f)
+			{
+				playerController.LookDirection = Sign(physicsBody2D.Velocity.x);
+			}
+
+			// add wall climb
+			if (!playerController.OnGround && physicsBody2D.Velocity.y > 0.0f && playerController.LookDirection * physicsBody2D.Velocity.x > 0.0f && physicsBody2D.OnWall)
+			{
+				playerController.State = PlayerController::WallClimpState;
+			}
 		}
-		else if (abs(physicsBody2D.Velocity.x) > 0.1f)
+		// on wall climb
+		else if (playerController.State == PlayerController::WallClimpState)
 		{
-			physicsBody2D.Velocity.x -= Sign(physicsBody2D.Velocity.x) * PLAYER_ACC * delta;
-		}
-		else 
-		{
-			physicsBody2D.Velocity.x = 0.0f;
-		}
+			physicsBody2D.Velocity.x = 10.0f * playerController.LookDirection;
+
+			// free state on ground or when not on wall
+			if (playerController.OnGround || !physicsBody2D.OnWall)
+			{
+				playerController.State = PlayerController::FreeState;
+				physicsBody2D.Velocity.x = 0.0f;
+			}
 			
-		// look direction
-		if (abs(direction) > 0.5f && direction != playerController.LookDirection)
-		{
-			playerController.LookDirection = direction;
-		} 
+			// limit fall speed
+			if (physicsBody2D.Velocity.y > PLAYER_WALL_FALL_SPEED)
+				physicsBody2D.Velocity.y = PLAYER_WALL_FALL_SPEED;
+		}
 
 		// jump 
 		playerController.JumpBuffer -= delta;
-		if (playerController.JumpBuffer > 0.0001f &&  playerController.OnGround)
+
+		if ( playerController.JumpBuffer > 0.0001f && (
+		(playerController.OnGround && playerController.State == PlayerController::FreeState) ||
+		(playerController.State == PlayerController::WallClimpState)) )
 		{
 			physicsBody2D.Velocity.y = - PLAYER_JUMP_FORCE;
+
+			// add wall jump
+			if (playerController.State == PlayerController::WallClimpState)
+			{
+				playerController.LookDirection *= -1.0f;
+				physicsBody2D.Velocity.x = playerController.LookDirection * PLAYER_MAX_SPEED;
+				playerController.State = PlayerController::FreeState;
+			}
+
 			playerController.OnGround = false;
 			playerController.JumpBuffer = 0.0f;
 			gravity2D.Gravity = PLAYER_UP_GRAVITY;

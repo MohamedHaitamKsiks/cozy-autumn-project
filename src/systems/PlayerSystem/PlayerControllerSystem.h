@@ -16,7 +16,7 @@ using namespace ASEngine;
 
 class PlayerControllerSystem: public System<PlayerController, PhysicsBody2D, Gravity2D, Transform2D>
 {
-
+	
 	// get sign
 	static inline float Sign(float num)
 	{

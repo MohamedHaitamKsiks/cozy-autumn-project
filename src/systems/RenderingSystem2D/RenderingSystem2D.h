@@ -12,8 +12,9 @@ using namespace ASEngine;
 enum class DrawLayer
 {
 	Background,
-	Tilemap,
+	TilemapShadow,
 	Player,
+	Tilemap,
 	Debug,
 	UI,
 	// draw layers number

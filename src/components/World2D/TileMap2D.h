@@ -10,6 +10,8 @@ struct Tile2D
 {
 	vec2 Source;
 	vec2 Position;
+	Quad2D Quad;
+	Quad2D ShadowQuad;
 };
 
 struct TileMapLayer2D 

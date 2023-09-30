@@ -13,6 +13,8 @@ using namespace ASEngine;
 class PlayerAnimationSystem: public System<PlayerController, AnimatedSprite2D, PhysicsBody2D, Transform2D>
 {
 public :
+	PlayerAnimationSystem();
+
 	// land squash
 	static void LandSquash(const PhysicsBody2D& physicsBody2D, Transform2D& transform2D);
 
@@ -20,6 +22,13 @@ public :
 	static void JumpStretch(Transform2D &transform2D);
 
 private:
+	// cache player sprites
+	ResourceID m_IdleID;
+	ResourceID m_RunID;
+	ResourceID m_JumpID;
+	ResourceID m_WallID;
+	ResourceID m_WallWalkID;
+
 	// default methods
 	void OnCreate();
 	void OnUpdate(float delta);

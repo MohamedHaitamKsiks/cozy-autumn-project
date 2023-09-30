@@ -14,7 +14,7 @@ void World2D::OnCreate()
     // load tileset material
     Image tilesetImage;
     tilesetImage.Load(TilesetName);
-    
+
     Texture tilesetTexture = Texture::LoadFromImage(tilesetImage);
     TilesetTexture = tilesetTexture;
 
@@ -96,10 +96,23 @@ void World2D::OnCreate()
                 {
                     if (grid[i] == 0) continue;
 
+                    int cellX = i % cellWidth;
+                    int cellY = i / cellWidth;
+
+                    // check if cell is surrounded by other cells
+
+                    // top
+                    bool cellTopFilled = cellY - 1 < 0 || grid[cellX + (cellY - 1) * cellWidth] == 1;
+                    bool cellBottomFilled = cellY + 1 > cellHeight - 1 || grid[cellX + (cellY + 1) * cellWidth] == 1;
+                    bool cellLeftFilled = cellX - 1 < 0 || grid[cellX - 1 + cellY * cellWidth] == 1;
+                    bool cellRightFilled = cellX + 1 > cellWidth - 1 || grid[cellX + 1 + cellY * cellWidth] == 1;
+
+                    if (cellTopFilled && cellBottomFilled && cellLeftFilled && cellRightFilled) continue;
+
                     // set transform
                     Transform2D solidTileTransform2D;
-                    solidTileTransform2D.Position.x = (float) ( i % cellWidth) * gridSize + level2D.Position.x;
-                    solidTileTransform2D.Position.y = (float) (i / cellWidth) * gridSize + level2D.Position.y;
+                    solidTileTransform2D.Position.x = (float) cellX * gridSize + level2D.Position.x;
+                    solidTileTransform2D.Position.y = (float) cellY * gridSize + level2D.Position.y;
 
                     // spawn scene at transform
                     auto& solidTileScene = ResourceManager<Scene>::Get(solidTileSceneID);
@@ -111,19 +124,41 @@ void World2D::OnCreate()
                 // create tilelayer
                 TileMapLayer2D tilemapLayer2D;
 
+
                 // set grid size
                 tilemap2D.TileSize = layer["__gridSize"];
                 
+                Json layerTiles;
+                if (layerIdentifier == "AutoLayer")
+                {
+                    layerTiles = layer["autoLayerTiles"];
+                }
+                else
+                {
+                    layerTiles = layer["gridTiles"];
+                }
+
+
                 // add tiles
-                for (auto tile: layer["gridTiles"])
+                for (auto tile: layerTiles)
                 {
                     Tile2D tile2D;
 
                     tile2D.Position.x = tile["px"][0];
                     tile2D.Position.y = tile["px"][1];
+                    tile2D.Position = tile2D.Position + level2D.Position;
 
                     tile2D.Source.x = tile["src"][0];
                     tile2D.Source.y = tile["src"][1];
+
+                    // create tile quad
+                    mat3 tileTransformMatrix = mat3::Translate(tile2D.Position);
+                    vec2 tileSize2D = vec2::ONE() * tilemap2D.TileSize;
+                   
+                    tile2D.Quad = Quad2D(tileSize2D, tileTransformMatrix, Color::WHITE(), tile2D.Source.x / tilemap2D.TileSize, TilesetTexture.GetWidth() / tilemap2D.TileSize, tile2D.Source.y / tilemap2D.TileSize, TilesetTexture.GetHeight() / tilemap2D.TileSize);
+                    
+                    tileTransformMatrix = tileTransformMatrix * mat3::Translate(vec2{-1.0f, 1.0f} * 2.0f);
+                    tile2D.ShadowQuad = Quad2D(tileSize2D, tileTransformMatrix, Color::BLACK(), tile2D.Source.x / tilemap2D.TileSize, TilesetTexture.GetWidth() / tilemap2D.TileSize, tile2D.Source.y / tilemap2D.TileSize, TilesetTexture.GetHeight() / tilemap2D.TileSize);
 
                     tilemapLayer2D.Tiles.Push(tile2D);
                 }
