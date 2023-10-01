@@ -11,7 +11,13 @@ using namespace ASEngine;
 class SpawningSystem2D: public System<EmptyComponent>
 {
 public:
-	static void SpawnSceneAt(const Scene& scene, const Transform2D& transform2D);
+	template<typename T>
+	static void AddComponentToScene(Scene& scene, const T& component)
+	{
+		for (auto &builder : scene.GetEntityBuilders())
+			builder.AddComponents(component);
+	}
+
 
 private:
 	void OnCreate();

@@ -5,6 +5,8 @@
 using namespace ASEngine;
 
 #include "components/EmptyComponent.h"
+#include "components/VisibilityNotifier2D/VisibilityNotifier2D.h"
+#include "components/Particles2D/GrassParticles2D.h"
 #include "components/Spawner2D/Spawner2D.h"
 #include "components/AnimatedSprite2D/AnimatedSprite2D.h"
 #include "components/AudioPlayer2D/AudioPlayer2D.h"
@@ -23,8 +25,11 @@ using namespace ASEngine;
 #include "systems/RenderingSystem2D/RenderingSystem2D.h"
 #include "systems/SpriteAnimationSystem2D/SpriteAnimationSystem2D.h"
 #include "systems/PlayerSystem/PlayerLevelTransitionSystem.h"
+#include "systems/PlayerSystem/GrassCollisionSystem.h"
 #include "systems/PlayerSystem/PlayerAnimationSystem.h"
 #include "systems/PlayerSystem/PlayerControllerSystem.h"
+#include "systems/ParticlesSystem2D/GrassParticlesSystem.h"
+#include "systems/VisibilityNotifingSystem/VisibilityNotifingSystem2D.h"
 #include "systems/TilemapRenderingSystem2D/TilemapRenderingSystem2D.h"
 #include "systems/CameraSystem2D/CameraSystem2D.h"
 

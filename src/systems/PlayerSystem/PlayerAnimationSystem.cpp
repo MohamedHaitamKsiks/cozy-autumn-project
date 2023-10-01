@@ -31,6 +31,7 @@ void PlayerAnimationSystem::OnUpdate(float delta)
 {
 	ForEach([delta, this](PlayerController &playerController, AnimatedSprite2D &animatedSprite2D, PhysicsBody2D& physicsBody2D, Transform2D &transform2D)
 	{
+
 		// flip sprite to look direction
 		if (animatedSprite2D.FlipH != playerController.LookDirection < 0.5f)
 		{

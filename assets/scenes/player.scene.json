@@ -1,7 +1,9 @@
 [
     {
-        "CameraController2D":
-        {
+        "PlayerController": {
+            "State": "Free"
+        },
+        "CameraController2D": {
             "ShakeFreq": 20.0,
             "LookDistance": 50.0,
             "LookSpeed": 2.0,
@@ -15,9 +17,6 @@
                 "y": -48
             },
             "Centered": false
-        },
-        "PlayerController": {
-            "State": "Free"
         },
         "Gravity2D": {
             "Gravity": 200
@@ -40,8 +39,7 @@
             },
             "IsCentered": false,
             "CollisionLayers": [
-                0,
-                2
+                0
             ],
             "DrawDebug": false
         }

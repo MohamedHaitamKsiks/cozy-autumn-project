@@ -12,8 +12,19 @@ using namespace ASEngine;
 enum class DrawLayer
 {
 	Background,
+
+	Shadow,
 	TilemapShadow,
+	
 	Player,
+
+	// grass layers
+	Grass_0,
+	Grass_1,
+	Grass_2,
+	Grass_3,
+	Grass_4,
+
 	Tilemap,
 	Debug,
 	UI,

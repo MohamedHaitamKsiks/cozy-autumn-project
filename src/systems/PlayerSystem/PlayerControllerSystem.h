@@ -5,16 +5,19 @@
 #include "components/Physics2D/PhysicsBody2D.h"
 #include "components/Transform2D/Transform2D.h"
 #include "components/Physics2D/Gravity2D.h"
+#include "components/Physics2D/CollisionBox2D.h"
 
 #include "systems/RenderingSystem2D/RenderingSystem2D.h"
 #include "systems/SpriteAnimationSystem2D/SpriteAnimationSystem2D.h"
+
+#include "GrassCollisionSystem.h"
 #include "PlayerAnimationSystem.h"
 
 #include "ASEngine.h"
 
 using namespace ASEngine;
 
-class PlayerControllerSystem: public System<PlayerController, PhysicsBody2D, Gravity2D, Transform2D>
+class PlayerControllerSystem: public System<PlayerController, PhysicsBody2D, Gravity2D, CollisionBox2D, Transform2D>
 {
 	
 	// get sign

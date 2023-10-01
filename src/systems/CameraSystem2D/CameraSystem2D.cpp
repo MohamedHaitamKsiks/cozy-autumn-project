@@ -2,7 +2,7 @@
 
 CameraSystem2D::CameraSystem2D()
 {
-	m_Priority = 100;
+	m_Priority = 101;
 }
 
 void CameraSystem2D::OnCreate()

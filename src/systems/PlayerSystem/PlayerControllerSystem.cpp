@@ -8,9 +8,8 @@ void PlayerControllerSystem::OnCreate(){
 
 void PlayerControllerSystem::OnUpdate(float delta)
 {
-	ForEach([delta](PlayerController& playerController, PhysicsBody2D& physicsBody2D, Gravity2D& gravity2D, Transform2D& transform2D)
+	ForEach([delta](PlayerController& playerController, PhysicsBody2D& physicsBody2D, Gravity2D& gravity2D, CollisionBox2D& collisionBox2D, Transform2D& transform2D)
 	{
-
 		// ground
 		if (physicsBody2D.OnGround)
 		{
@@ -124,6 +123,9 @@ void PlayerControllerSystem::OnUpdate(float delta)
 			gravity2D.Gravity = PLAYER_DOWN_GRAVITY;
 		}
 
+		// collision with grass
+		GrassCollisionSystem::CollisionWithGrass(playerController, collisionBox2D, transform2D);
+
 	});
 };
 
@@ -134,8 +136,8 @@ void PlayerControllerSystem::OnRender2D()
 
 void PlayerControllerSystem::OnInputEvent(const InputEvent& event)
 {
-	ForEach([&event](PlayerController &playerController, PhysicsBody2D &physicsBody2D, Gravity2D &gravity2D, Transform2D &transform2D)
-	{
+	ForEach([&event](PlayerController &playerController, PhysicsBody2D &physicsBody2D, Gravity2D &gravity2D, CollisionBox2D &collisionBox2D, Transform2D &transform2D)
+			{
 		if (event.GetType() != InputEventType::KEYBOARD)
 			return;
 
@@ -159,6 +161,5 @@ void PlayerControllerSystem::OnInputEvent(const InputEvent& event)
 			}
 			
 			playerController.InputJumpPressed = keyEvent.Pressed;
-		}
-	});
+		} });
 };

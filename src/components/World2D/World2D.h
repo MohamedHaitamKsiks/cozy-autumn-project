@@ -4,7 +4,10 @@
 #include <string>
 #include <unordered_map>
 
+#include "components/Physics2D/CollisionBox2D.h"
 #include "components/Transform2D/Transform2D.h"
+#include "components/Particles2D/GrassParticles2D.h"
+
 #include "TileMap2D.h"
 
 #include "systems/SpawningSystem2D/SpawningSystem2D.h"

@@ -3,6 +3,8 @@
 void ECSRegistry()
 {
 	ComponentManager::RegisterComponent<EmptyComponent>(UniqueString("EmptyComponent"));
+	ComponentManager::RegisterComponent<VisibilityNotifier2D>(UniqueString("VisibilityNotifier2D"));
+	ComponentManager::RegisterComponent<GrassParticles2D>(UniqueString("GrassParticles2D"));
 	ComponentManager::RegisterComponent<Spawner2D>(UniqueString("Spawner2D"));
 	ComponentManager::RegisterComponent<AnimatedSprite2D>(UniqueString("AnimatedSprite2D"));
 	ComponentManager::RegisterComponent<AudioPlayer2D>(UniqueString("AudioPlayer2D"));
@@ -21,8 +23,11 @@ void ECSRegistry()
 	SystemManager::RegisterSystem<RenderingSystem2D>();
 	SystemManager::RegisterSystem<SpriteAnimationSystem2D>();
 	SystemManager::RegisterSystem<PlayerLevelTransitionSystem>();
+	SystemManager::RegisterSystem<GrassCollisionSystem>();
 	SystemManager::RegisterSystem<PlayerAnimationSystem>();
 	SystemManager::RegisterSystem<PlayerControllerSystem>();
+	SystemManager::RegisterSystem<GrassParticlesSystem>();
+	SystemManager::RegisterSystem<VisibilityNotifingSystem2D>();
 	SystemManager::RegisterSystem<TilemapRenderingSystem2D>();
 	SystemManager::RegisterSystem<CameraSystem2D>();
 }

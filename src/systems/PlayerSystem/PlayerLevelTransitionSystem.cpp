@@ -29,6 +29,8 @@ void PlayerLevelTransitionSystem::OnUpdate(float delta)
 			}
 		}
 	});
+	
+
 };
 
 void PlayerLevelTransitionSystem::OnRender2D()

@@ -64,7 +64,6 @@ void World2D::OnCreate()
         for (auto layer: layers)
         {
             std::string layerIdentifier = layer["__identifier"];
-            
 
             if (layerIdentifier == "Entities")
             {
@@ -72,17 +71,40 @@ void World2D::OnCreate()
                 auto entityInstances = layer["entityInstances"];
                 for (auto instance: entityInstances)
                 {
+                    std::string identifier = instance["__identifier"];
+
                     // get scene
                     std::string sceneName = instance["fieldInstances"][0]["__value"];
                     ResourceID sceneID = ResourceManager<Scene>::GetResourceId(UniqueString(sceneName));
-                    auto& scene = ResourceManager<Scene>::Get(sceneID);
+                    Scene scene = ResourceManager<Scene>::Get(sceneID);
 
                     // set transform
                     Transform2D transform2D;
                     transform2D.Position.x = instance["__worldX"];
                     transform2D.Position.y = instance["__worldY"];
+                    SpawningSystem2D::AddComponentToScene(scene, transform2D);
 
-                    SpawningSystem2D::SpawnSceneAt(scene, transform2D);
+                    // if grass area add collision and grass
+                    if (identifier == "GrassArea")
+                    {
+                        // add collision box
+                        CollisionBox2D collisionBox2D;
+                        collisionBox2D.Size.x = instance["width"];
+                        collisionBox2D.Size.y = instance["height"];
+                        collisionBox2D.Offset.y = -collisionBox2D.Size.y;
+                        collisionBox2D.CollisionLayers = 1;
+                        collisionBox2D.DrawDebug = false;
+
+                        SpawningSystem2D::AddComponentToScene(scene, collisionBox2D);
+                    
+                        // add grass 
+                        GrassParticles2D grassParticles2D;
+                        grassParticles2D.Width = collisionBox2D.Size.x;
+
+                        SpawningSystem2D::AddComponentToScene(scene, grassParticles2D);
+                    }
+
+                    scene.Instantiate();
                 }
             }
             else if (layerIdentifier == "SolidGrid")
@@ -100,8 +122,6 @@ void World2D::OnCreate()
                     int cellY = i / cellWidth;
 
                     // check if cell is surrounded by other cells
-
-                    // top
                     bool cellTopFilled = cellY - 1 < 0 || grid[cellX + (cellY - 1) * cellWidth] == 1;
                     bool cellBottomFilled = cellY + 1 > cellHeight - 1 || grid[cellX + (cellY + 1) * cellWidth] == 1;
                     bool cellLeftFilled = cellX - 1 < 0 || grid[cellX - 1 + cellY * cellWidth] == 1;
@@ -115,8 +135,9 @@ void World2D::OnCreate()
                     solidTileTransform2D.Position.y = (float) cellY * gridSize + level2D.Position.y;
 
                     // spawn scene at transform
-                    auto& solidTileScene = ResourceManager<Scene>::Get(solidTileSceneID);
-                    SpawningSystem2D::SpawnSceneAt(solidTileScene, solidTileTransform2D);
+                    Scene solidTileScene = ResourceManager<Scene>::Get(solidTileSceneID);
+                    SpawningSystem2D::AddComponentToScene(solidTileScene, solidTileTransform2D);
+                    solidTileScene.Instantiate();
                 }
             }
             else 
