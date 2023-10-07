@@ -153,10 +153,17 @@ void World2D::OnCreate()
                 if (layerIdentifier == "AutoLayer")
                 {
                     layerTiles = layer["autoLayerTiles"];
+                    tilemapLayer2D.Layer = DrawLayer::Tilemap;
+                }
+                else if (layerIdentifier == "BackgroundLayer")
+                {
+                    layerTiles = layer["autoLayerTiles"];
+                    tilemapLayer2D.Layer = DrawLayer::BackgroundTilemap;
                 }
                 else
                 {
                     layerTiles = layer["gridTiles"];
+                    tilemapLayer2D.Layer = DrawLayer::BackgroundTilemap;
                 }
 
 

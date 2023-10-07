@@ -1,0 +1,8 @@
+{
+    "ImagePath": "images/background/spr_new_background.png",
+    "Offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "Frames": 4
+}

@@ -13,19 +13,29 @@ enum class DrawLayer
 {
 	Background,
 
+	BackgroundTilemapShadow,
+	BackgroundTilemap,
+	
 	Shadow,
 	TilemapShadow,
 	
-	Player,
-
-	// grass layers
 	Grass_0,
 	Grass_1,
+
+	BackParticles,
+
+	Player,
+
+	Particles,
+
 	Grass_2,
 	Grass_3,
 	Grass_4,
 
 	Tilemap,
+
+	FrontParticles,
+
 	Debug,
 	UI,
 	// draw layers number
@@ -112,6 +122,7 @@ private:
 
 	// draw
 	void OnRender2D();
+	void OnUIRender2D();
 };
 
 #endif // SYSTEM_RENDERINGSYSTEM2D_H

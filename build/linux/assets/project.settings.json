@@ -1,0 +1,18 @@
+{
+	"name": "Template Projet",
+	"viewport": {
+		"size":{
+			"width": 480,
+			"height": 270
+		}
+	},
+	"window": {
+		"size": {
+			"width": 1280,
+			"height": 720
+		},
+		"keepAspectRatio": true,
+		"fullscreen": true
+	},
+	"mainScene": "scenes/main.scene.json" 
+}

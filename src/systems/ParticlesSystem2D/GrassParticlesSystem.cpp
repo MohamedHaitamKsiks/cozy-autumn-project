@@ -1,7 +1,7 @@
 #include "GrassParticlesSystem.h"
 
 #define MAX_PRESSION_DISTANCE 16.0f
-#define GRASS_ANIMATION_SPEED 12.0f
+#define GRASS_ANIMATION_SPEED 15.0f
 #define GRASS_WIND_SPEED 2.5f
 
 void GrassParticlesSystem::OnCreate()
@@ -28,9 +28,9 @@ void GrassParticlesSystem::OnUpdate(float delta)
                 float pressionDistance = blade.Position.x - grassParticles2D.PressionPosition;
                 // rotate to pression
                 if (pressionDistance > 0.0f)
-                    rotationTarget += Interpolate::Linear(-1.0f, 0.0f, pressionDistance / MAX_PRESSION_DISTANCE) * M_PI * 0.2f;
+                    rotationTarget += Interpolate::Linear(-1.0f, 0.0f, pressionDistance / MAX_PRESSION_DISTANCE) * M_PI * 0.3f;
                 else
-                    rotationTarget += Interpolate::Linear(1.0f, 0.0f, -pressionDistance / MAX_PRESSION_DISTANCE) * M_PI * 0.2f;
+                    rotationTarget += Interpolate::Linear(1.0f, 0.0f, -pressionDistance / MAX_PRESSION_DISTANCE) * M_PI * 0.3f;
             }
             
             // animate blade

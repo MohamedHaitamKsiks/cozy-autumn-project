@@ -25,12 +25,14 @@ void SpriteAnimationSystem2D::OnRender2D()
 {
 	ForEach([](AnimatedSprite2D& animatedSprite2D, Transform2D& transform2D)
 	{
+		if (!animatedSprite2D.Visible) return;
+
 		SpriteDrawInfo spriteInfo;
 		spriteInfo.Centered = animatedSprite2D.Centered;
 		spriteInfo.Frame = animatedSprite2D.Frame;
 		spriteInfo.Modulate = Color::BLACK();
 		spriteInfo.SpriteID = animatedSprite2D.SpriteID;
-		spriteInfo.Layer = animatedSprite2D.Layer;
+		spriteInfo.Layer = DrawLayer::TilemapShadow;
 		spriteInfo.Offset = animatedSprite2D.Offset;
 		spriteInfo.FlipH = animatedSprite2D.FlipH;
 		spriteInfo.FlipV = animatedSprite2D.FlipV;
@@ -42,6 +44,7 @@ void SpriteAnimationSystem2D::OnRender2D()
 
 		// draw sprite
 		spriteInfo.Modulate = animatedSprite2D.Modulate;
+		spriteInfo.Layer = animatedSprite2D.Layer;
 		RenderingSystem2D::DrawSprite(spriteInfo, transform2D);
 	});
 };

@@ -1,0 +1,31 @@
+[
+    {
+        "KillArea": {},
+        "VisibilityNotifier2D": {},
+        "AnimatedSprite2D": {
+            "SpriteName": "sprites/objects/spike.sprite.json",
+            "FrameRate":0.0,
+            "Frame": 2,
+            "Offset": {
+                "x": 0,
+                "y": 0
+            },
+            "Centered": false
+        },
+        "CollisionBox2D": {
+            "Size": {
+                "x": 16,
+                "y": 8
+            },
+            "Offset": {
+                "x": 0,
+                "y": 0
+            },
+            "IsCentered": false,
+            "CollisionLayers": [
+                0
+            ],
+            "DrawDebug": false
+        }
+    }
+]

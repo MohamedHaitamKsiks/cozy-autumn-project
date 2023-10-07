@@ -39,7 +39,8 @@ void TilemapRenderingSystem2D::OnRender2D()
 				tileShadowDrawCommand.Quad = tile2D.ShadowQuad;
 				tileShadowDrawCommand.MaterialID = World2D::Instance->TilesetMaterialID;
 
-				RenderingSystem2D::QueueDrawCommand(tileShadowDrawCommand, DrawLayer::TilemapShadow);
+				if (tilemapLayer2D.Layer == DrawLayer::Tilemap)
+					RenderingSystem2D::QueueDrawCommand(tileShadowDrawCommand, DrawLayer::TilemapShadow);
 			}
 
 			// normal draw
@@ -59,7 +60,7 @@ void TilemapRenderingSystem2D::OnRender2D()
 				tileDrawCommand.Quad = tile2D.Quad;
 				tileDrawCommand.MaterialID = World2D::Instance->TilesetMaterialID;
 
-				RenderingSystem2D::QueueDrawCommand(tileDrawCommand, DrawLayer::Tilemap);
+				RenderingSystem2D::QueueDrawCommand(tileDrawCommand, tilemapLayer2D.Layer);
 			}
 		} });
 };

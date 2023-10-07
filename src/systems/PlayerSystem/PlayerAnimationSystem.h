@@ -5,12 +5,15 @@
 #include "components/Player/PlayerController.h"
 #include "components/Physics2D/PhysicsBody2D.h"
 #include "components/Transform2D/Transform2D.h"
+#include "components/ParticleEmitter2D/ParticleEmitter2D.h"
+
+#include "systems/CameraSystem2D/CameraSystem2D.h"
 
 #include "ASEngine.h"
 
 using namespace ASEngine;
 
-class PlayerAnimationSystem: public System<PlayerController, AnimatedSprite2D, PhysicsBody2D, Transform2D>
+class PlayerAnimationSystem: public System<ParticleEmitter2D, PlayerController, AnimatedSprite2D, PhysicsBody2D, Transform2D>
 {
 public :
 	PlayerAnimationSystem();
@@ -28,6 +31,9 @@ private:
 	ResourceID m_JumpID;
 	ResourceID m_WallID;
 	ResourceID m_WallWalkID;
+	ResourceID m_DashID;
+	ResourceID m_DeathID;
+	ResourceID m_DeathParticlesID;
 
 	// default methods
 	void OnCreate();

@@ -1,6 +1,8 @@
 #ifndef COMPONENT_TILEMAP2D_H
 #define COMPONENT_TILEMAP2D_H
 
+#include "systems/RenderingSystem2D/RenderingSystem2D.h"
+
 #include "ASEngine.h"
 
 
@@ -17,6 +19,7 @@ struct Tile2D
 struct TileMapLayer2D 
 {
 	TDynamicArray<Tile2D> Tiles{};
+	DrawLayer Layer = DrawLayer::Tilemap;
 };
 
 struct TileMap2D: public TComponent<TileMap2D>

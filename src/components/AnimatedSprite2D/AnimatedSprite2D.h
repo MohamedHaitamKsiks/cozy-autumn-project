@@ -25,6 +25,8 @@ struct AnimatedSprite2D: public TComponent<AnimatedSprite2D>
 
 	Color Modulate = Color::WHITE();
 
+	bool Visible = true;
+
 	void OnCreate();
 };
 

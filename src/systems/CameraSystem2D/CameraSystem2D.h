@@ -14,8 +14,21 @@ class CameraSystem2D: public System<PlayerController, CameraController2D, Transf
 {
 public:
 	CameraSystem2D();
+	static inline void Shake(float magnitude, float duration)
+	{
+		s_Instance->IShake(magnitude, duration);
+	};
+
+	static inline void SlowMotion(float duration)
+	{
+		s_Instance->ISlowMotion(duration);
+	};
 
 private:
+	static CameraSystem2D* s_Instance;
+	void IShake(float magnitude, float duration);
+	void ISlowMotion(float duration);
+
 	void OnCreate();
 	void OnUpdate(float delta);
 	void OnRender2D();

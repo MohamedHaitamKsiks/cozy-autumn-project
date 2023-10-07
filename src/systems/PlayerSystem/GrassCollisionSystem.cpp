@@ -19,18 +19,3 @@ void GrassCollisionSystem::OnCreate()
 {
     s_Instance = this;
 };
-
-void GrassCollisionSystem::OnUpdate(float delta)
-{
-	// insert code ...
-};
-
-void GrassCollisionSystem::OnRender2D()
-{
-	// insert code ...
-};
-
-void GrassCollisionSystem::OnInputEvent(const InputEvent& event)
-{
-	// insert code ...
-};

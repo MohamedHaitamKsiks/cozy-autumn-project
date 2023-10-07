@@ -22,14 +22,9 @@ public:
 
 private:
 	static GrassCollisionSystem* s_Instance;
-	
-
 	void ICollisionWithGrass(const PlayerController &playerController, const CollisionBox2D &playerCollisionBox2D, const Transform2D &playerTransform2D);
-
+	
 	void OnCreate();
-	void OnUpdate(float delta);
-	void OnRender2D();
-	void OnInputEvent(const InputEvent& event);
 
 };
 

@@ -12,7 +12,7 @@ void PlayerLevelTransitionSystem::OnUpdate(float delta)
 
 	auto& currentLevel = world2D->Levels[world2D->CurrentLevelID];
 
-	ForEach([this, &currentLevel, world2D] (PlayerController& playerController, CameraController2D& cameraController2D, Transform2D& transform2D)
+	ForEach([this, &currentLevel, world2D] (PlayerController& playerController, PhysicsBody2D& physicsBody2D, CameraController2D& cameraController2D, Transform2D& transform2D)
 	{
 		// check if player out of bound
 		if (!PositionInLevelBound(transform2D.Position, currentLevel))
@@ -24,6 +24,20 @@ void PlayerLevelTransitionSystem::OnUpdate(float delta)
 				{
 					world2D->CurrentLevelID = i;
 					cameraController2D.Transition = true;
+
+					//change spawn position
+					playerController.Spawned = true;
+
+					// transittion player
+					playerController.LastState = playerController.State;
+					playerController.LastVelocity = physicsBody2D.Velocity;
+
+					playerController.TransitionTimer = PLAYER_TRANSITION_DURATION;
+
+					physicsBody2D.IsStatic = true;
+
+					playerController.State = PlayerController::TransitionState;
+
 					return;
 				}
 			}

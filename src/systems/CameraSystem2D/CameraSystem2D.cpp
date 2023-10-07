@@ -1,13 +1,36 @@
 #include "CameraSystem2D.h"
 
+CameraSystem2D* CameraSystem2D::s_Instance = nullptr;
+
 CameraSystem2D::CameraSystem2D()
 {
 	m_Priority = 101;
 }
 
+void CameraSystem2D::IShake(float magnitude, float duration)
+{
+	ForEach([duration, magnitude] (PlayerController& playerController, CameraController2D &cameraController2D, Transform2D &transform2D)
+	{
+		cameraController2D.ShakeAngle = Random::Float() * 2.0f * M_PI;
+		cameraController2D.ShakeDuration = duration;
+		cameraController2D.ShakeTime = 0.0f;
+		cameraController2D.ShakeMag = magnitude;
+	});
+}
+
+void CameraSystem2D::ISlowMotion(float duration)
+{
+	ForEach([duration] (PlayerController& playerController, CameraController2D &cameraController2D, Transform2D &transform2D)
+	{
+		Application::GetSingleton()->TimeScale = 0.1f;
+		cameraController2D.SlowTimer = duration * Application::GetSingleton()->TimeScale;
+	});
+}
+
 void CameraSystem2D::OnCreate()
 {
-	// insert code ...
+	s_Instance = this;
+	Renderer2D::GetCamera2D().Zoom = 480.0f / 320.0f;
 };
 
 void CameraSystem2D::OnUpdate(float delta)
@@ -64,9 +87,21 @@ void CameraSystem2D::OnUpdate(float delta)
 		// transition offset to 0
 		cameraController2D.TransitionOffset = Interpolate::Linear(cameraController2D.TransitionOffset, vec2::ZERO(), delta * cameraController2D.TransitionSpeed);
 
+		// shake animation
+		float shakeMag = Interpolate::Linear(cameraController2D.ShakeMag, 0.0f, cameraController2D.ShakeTime / cameraController2D.ShakeDuration);
+		cameraController2D.ShakeOffset = vec2::RIGHT().Rotate(cameraController2D.ShakeAngle) * (shakeMag * sin(2.0f * M_PI * cameraController2D.ShakeFreq * cameraController2D.ShakeTime));
+		cameraController2D.ShakeTime += delta;
+
+		// slow duration
+		cameraController2D.SlowTimer -= delta;
+		if (cameraController2D.SlowTimer < 0.0f)
+		{
+			Application::GetSingleton()->TimeScale = 1.0f;
+		}
+
 		// set camera position
-		camera2D.Position = cameraController2D.Position + cameraController2D.TransitionOffset; 
-	
+		camera2D.Position = cameraController2D.Position + cameraController2D.TransitionOffset + cameraController2D.ShakeOffset; 
+
 	});
 };
 

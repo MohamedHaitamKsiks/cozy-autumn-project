@@ -5,7 +5,7 @@ RenderingSystem2D* RenderingSystem2D::s_Instance = nullptr;
 
 RenderingSystem2D::RenderingSystem2D()
 {
-	m_Priority = 99;
+	m_Priority = 300;
 }
 
 void RenderingSystem2D::OnCreate()
@@ -96,7 +96,6 @@ void RenderingSystem2D::DrawText(const TextDrawInfo &textInfo, const Transform2D
 	for (int i = 0; i < textInfo.Text.length(); i++)
 	{
 		char c = textInfo.Text[i];
-
 		switch (c)
 		{
 		// draw space
@@ -144,20 +143,23 @@ void RenderingSystem2D::IQueueDrawCommand(const DrawCommand &drawCommand, DrawLa
 
 void RenderingSystem2D::OnRender2D()
 {
-	// draw background
-	RectangleDrawInfo rectangleInfo;
-	rectangleInfo.Layer = DrawLayer::Background,
-	rectangleInfo.Modulate = Color{186.0f / 255.0f, 190.0f / 255.0f, 133.0f / 255.0f, 1.0f};
-	rectangleInfo.Size = Viewport::GetSize() / Renderer2D::GetCamera2D().Zoom;
-
-	Transform2D rectangleTransform2D;
-	rectangleTransform2D.Position = Renderer2D::GetCamera2D().Position;
-
-	DrawRectangle(rectangleInfo, rectangleTransform2D);
 
 	for (int layer = 0; layer < (int)DrawLayer::Count; layer++)
 	{
+		for (const auto &command : m_DrawQueue[(int)layer])
+		{
+			Renderer2D::DrawQuad(command.Quad, command.MaterialID);
+		}
+		// clean queue
+		m_DrawQueue[(int)layer].Clear();
+	}
+}
 
+void RenderingSystem2D::OnUIRender2D()
+{
+
+	for (int layer = 0; layer < (int)DrawLayer::Count; layer++)
+	{
 		for (const auto &command : m_DrawQueue[(int)layer])
 		{
 			Renderer2D::DrawQuad(command.Quad, command.MaterialID);

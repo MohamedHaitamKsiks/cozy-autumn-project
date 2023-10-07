@@ -11,7 +11,7 @@ public:
 	// resource name
 	UniqueString AudioName;
 	// audio resource
-	ResourceID AudioID;
+	ResourceID AudioID = CHUNK_NULL;
 
 	// auto play on create
 	bool AutoPlaying = false;
@@ -32,6 +32,7 @@ public:
 	inline void Stop()
 	{
 		AudioEngine::Stop(ChannelID);
+		ChannelID = CHUNK_NULL - 1;
 	}
 
 	// is playing
